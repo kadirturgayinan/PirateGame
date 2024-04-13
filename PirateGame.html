@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Slot Game</title>
+
+    <style>
+
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            border: 5px solid #FFD700;
+        }
+        
+        .reel-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .reel {
+            width: 100px;
+            height: 150px;
+            border: 1px solid black;
+            margin: 0 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .frame {
+            width: 120px;
+            height: 170px;
+            border: 5px solid #FFD700;
+            position: relative;
+            border-radius: 15px;
+        }
+
+        #winMessage {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #winMessage.active {
+            display: block;
+        }
+
+        #sevenMessage {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+
+        #sevenMessage.active {
+            display: block;
+        }
+
+        .spin-button {
+            background-color: #FFD700;
+            color: #000;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .spin-button:hover {
+            background-color: #FFA500;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="slot-machine">
+
+        <div class="frame"></div>
+
+        <div class="reel-container">
+
+            <div class="reel" id="reel1"></div>
+            <div class="reel" id="reel2"></div>
+            <div class="reel" id="reel3"></div>
+
+        </div>
+
+        <button class="spin-button" onclick="spin()">Spin</button>
+
+        <div id="winMessage"> WIN!</div>
+        <div id="sevenMessage"> GOOD JOB! </div>
+
+    </div>
+
+    <script>
+
+        // Korsan sembollerini içeren bir dizi oluşturuldu
+
+        const symbols = ['☠️', '⚔️', '🔫', '🦜', '7', '7',];
+        const winMessage = document.getElementById('winMessage');
+        const sevenMessage = document.getElementById('sevenMessage');
+
+        function spin() {
+            const reel1 = document.getElementById('reel1');
+            const reel2 = document.getElementById('reel2');
+            const reel3 = document.getElementById('reel3');
+
+            // Rastgele semboller secilmesi 
+
+            const result1 = Math.floor(Math.random() * symbols.length);
+            const result2 = Math.floor(Math.random() * symbols.length);
+            const result3 = Math.floor(Math.random() * symbols.length);
+
+            reel1.textContent = symbols[result1];
+            reel2.textContent = symbols[result2];
+            reel3.textContent = symbols[result3];
+
+            // Uc sembolun de aynı olmasi veya 7 kombinasyonunun tamamlanmasi durumu
+
+            if ((symbols[result1] === '7' && symbols[result2] === '7' && symbols[result3] === '7') ||
+                (symbols[result1] === symbols[result2] && symbols[result2] === symbols[result3] && symbols[result1] !== '7'))
+                
+                {
+                if (symbols[result1] === '7') {
+                    sevenMessage.classList.add('active');
+                }
+                
+                else {
+                    winMessage.classList.add('active');
+                }
+
+
+            } else {
+                winMessage.classList.remove('active');
+                sevenMessage.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
